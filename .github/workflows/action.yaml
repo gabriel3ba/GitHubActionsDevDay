@@ -1,13 +1,26 @@
-name: action
-on: push
+name: validate-config
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+    paths:
+      - "config.yaml"
 
 jobs:
-  echo:
+  validate-config:
     runs-on: ubuntu-latest
 
     steps:
-      - name: echo text
-        run: echo "Job ran successfully "
-      - name: optional step
-        run: echo "Branch is bug fix"
-        if: ${{ startsWith(github.ref_name, 'bug') }}
+      - name: pull repo
+        uses: actions/checkout@v3
+      - name: setup python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: install dependencies
+        run: |
+          pip install pyyaml
+      - name: validate config file
+        run: |
+          python validate-config.py
