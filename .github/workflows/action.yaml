@@ -1,0 +1,5 @@
+name: push-with-path-filter
+on:
+  push:
+    paths:
+      - "**.py"
