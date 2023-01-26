@@ -1,6 +1,8 @@
 name: push-with-path-filter
 on:
   push:
+    branches-ignore:
+      - release
     paths:
       - "**.py"
 
