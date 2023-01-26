@@ -1,13 +1,23 @@
-name: action
+name: image-delta
 on: push
 
 jobs:
-  echo:
+  image-delta:
     runs-on: ubuntu-latest
 
     steps:
-      - name: echo text
-        run: echo "Job ran successfully "
-      - name: optional step
-        run: echo "Branch is bug fix"
-        if: ${{ startsWith(github.ref_name, 'bug') }}
+      - name: pull repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: setup python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: setup git
+        run: |
+          git config --global user.email "actions@fcc.ca"
+          git config --global user.name "github actions"
+      - name: calculate diff
+        run: |
+          python image-delta.py
