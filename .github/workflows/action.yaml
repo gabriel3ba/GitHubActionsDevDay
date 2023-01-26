@@ -23,4 +23,4 @@ jobs:
           pip install pyyaml
       - name: validate config file
         run: |
-          python image-delta.py
+          python validate-config.py
