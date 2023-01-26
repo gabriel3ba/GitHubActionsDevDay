@@ -13,3 +13,13 @@ jobs:
           echo "Job ran successfully"
           echo "Source branch is ${GITHUB_HEAD_REF}"
           echo "Target branch is ${GITHUB_BASE_REF}"
+
+      - name: pull repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: setup python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
